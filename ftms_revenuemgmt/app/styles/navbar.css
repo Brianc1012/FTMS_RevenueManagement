@@ -104,6 +104,30 @@ i {
     transition: all 0.3s ease;
 }
 
+.subModules {
+    margin-left: 15%;
+    font-size: 14px;
+    color: #555;
+}
+
+.subModuleItem {
+    margin: 5px 0;
+    cursor: pointer;
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.subModuleItem:hover {
+    color: #000;
+    background-color: #f8fce2;
+}
+
+.subModuleItem.active {
+    color: #d32f2f;
+    font-weight: bold;
+    background-color: #fce4e4;
+}
+
 .logout {
     width: 100%;
     padding: 10px 15px;
