@@ -50,15 +50,17 @@ html, body {
 }
 
 .topBarContainer {
-  height: calc(100vh * 3 / 21); /* Use 2/21 of the viewport height */
-  width: 100%; /* Full width */
-  background-color: #333;
-  color: white;
+  height: calc(100vh * 3 / 21);
+  width: 100%;
+  background-color: #FBFBFB;
+  color: black;
   text-align: center;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; /* Center the inner content horizontally */
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
 }
+
 
 .pageContainer {
   height: 100%; /* Remaining space below the top bar */

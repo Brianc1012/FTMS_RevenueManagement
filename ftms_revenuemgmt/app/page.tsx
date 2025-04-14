@@ -1,6 +1,7 @@
 import React from 'react';
 import './styles/layout.css';
 import NavBar from './Components/navBar'; // Adjust the path if necessary
+import TopBar from './Components/topBar'; // Adjust the path if necessary
 
 const Page = () => {
   return (
@@ -14,7 +15,7 @@ const Page = () => {
 
         <div className="mainContent">
             <div className="topBarContainer">
-              <h1>Top Bar</h1>
+              <TopBar/>
             </div>
 
             <div className="pageContainer">
@@ -23,8 +24,7 @@ const Page = () => {
               </div>
             </div>
         </div>
-
-      {/*</div>*/}
+        
     </div>
     </>
     
