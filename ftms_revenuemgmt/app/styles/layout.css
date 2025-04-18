@@ -80,9 +80,14 @@ html, body {
   align-items: flex-start;
   justify-content: center;
   border-radius: 16px;
-  overflow: scroll;
   position: relative;
+  overflow-y: scroll; /* still scrollable */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
 
+.modalOverlay::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
 }
 
 .topBarContainer h1,

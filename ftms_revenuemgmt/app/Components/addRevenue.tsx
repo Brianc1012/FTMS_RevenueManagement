@@ -39,8 +39,8 @@ const addRevenue = ({ onClose }: { onClose: () => void }) => {
             {/* Buttons */}
             <div className="modalButtons">
                 <div className="buttonContainer">
-                    <button type="button" className="cancelButton">Cancel</button>
-                    <button type="submit" className="addButton">Add</button>
+                    <button type="button" className="cancelButton" onClick={onClose}>Cancel</button>
+                    <button type="submit" className="addButton" onClick={onClose}>Add</button>
                 </div>
             </div>
 

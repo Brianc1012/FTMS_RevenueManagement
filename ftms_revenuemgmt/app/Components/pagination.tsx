@@ -44,29 +44,27 @@ const PaginationComponent: React.FC<PaginationProps> = ({
   };
 
   return (
-    <div
-      className="demo-pagination-block"
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '10px',
-        flexWrap: 'wrap',
-      }}
-    >
+    <div className="pagination-container">
       {/* Page Size Dropdown */}
-      <select
-        value={pageSize}
-        onChange={(e) => onPageSizeChange(Number(e.target.value))}
-      >
-        {[5, 10, 20, 50].map((size) => (
-          <option key={size} value={size}>
-            {size} items per page
-          </option>
-        ))}
-      </select>
+      <div className="pagination-dropdown-container">
+        <select
+            value={pageSize}
+            id="recordsPerPage"
+            className="pagination-dropdown"
+            onChange={(e) => onPageSizeChange(Number(e.target.value))}
+        >
+            {[5, 10, 20, 50].map((size) => (
+            <option key={size} value={size}>
+                {size} items per page
+            </option>
+            ))}
+        </select>
+      </div>
 
       {/* Previous Button */}
+      <div className="pagination-button-container">
       <button
+        className="pagination-button"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
       >
@@ -75,21 +73,21 @@ const PaginationComponent: React.FC<PaginationProps> = ({
 
       {/* First Page */}
       <button
-        className={currentPage === 1 ? 'active' : ''}
+        className={`pagination-button ${currentPage === 1 ? 'active' : ''}`}
         onClick={() => onPageChange(1)}
       >
         1
       </button>
 
       {/* Ellipsis Before Visible Pages */}
-      {pageNumbers[0] > 2 && <span>...</span>}
+      {pageNumbers[0] > 2 && <span className="pagination-ellipsis">...</span>}
 
       {/* Visible Page Numbers */}
       {pageNumbers.map((page) =>
         page !== 1 && page !== totalPages ? (
           <button
             key={page}
-            className={currentPage === page ? 'active' : ''}
+            className={`pagination-button ${currentPage === page ? 'active' : ''}`}
             onClick={() => onPageChange(page)}
           >
             {page}
@@ -98,12 +96,14 @@ const PaginationComponent: React.FC<PaginationProps> = ({
       )}
 
       {/* Ellipsis After Visible Pages */}
-      {totalPages > pageNumbers[pageNumbers.length - 1] + 1 && <span>...</span>}
+      {totalPages > pageNumbers[pageNumbers.length - 1] + 1 && (
+        <span className="pagination-ellipsis">...</span>
+      )}
 
       {/* Last Page */}
       {totalPages > 1 && (
         <button
-          className={currentPage === totalPages ? 'active' : ''}
+          className={`pagination-button ${currentPage === totalPages ? 'active' : ''}`}
           onClick={() => onPageChange(totalPages)}
         >
           {totalPages}
@@ -112,25 +112,30 @@ const PaginationComponent: React.FC<PaginationProps> = ({
 
       {/* Next Button */}
       <button
+        className="pagination-button"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
       >
         Next
       </button>
+    </div>
 
       {/* Go To Input */}
-      <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-        Go to:
-        <input
-          type="number"
-          value={jumpToPage}
-          onChange={(e) => setJumpToPage(e.target.value)}
-          placeholder="Page #"
-          style={{ width: '60px' }}
-        />
-      </label>
-      <button onClick={handleJumpToPage}>Go</button>
+    <div className="pagination-goto-container">
+        <label className="pagination-go-to">
+            Go to:
+            <input
+            type="number"
+            value={jumpToPage}
+            onChange={(e) => setJumpToPage(e.target.value)}
+            placeholder="Page #"
+            className="pagination-input"
+            />
+        </label>
+        <button className="pagination-go-button" onClick={handleJumpToPage}> Go </button>
     </div>
+</div>
+      
   );
 };
 
