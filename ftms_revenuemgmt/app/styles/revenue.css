@@ -1,0 +1,156 @@
+button {
+  outline: 1px solid black;
+  border-radius: 5px;
+} 
+
+.revenuePage {
+    padding: 20px;
+    font-family: 'poppins', sans-serif;
+    color: black;
+  }
+
+  .settings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .settings input[type="text"],
+  .settings input[type="date"],
+  .settings select {
+    padding: 8px;
+    font-size: 1rem;
+  }
+
+  .settings input {
+    outline: 1px solid black;
+    border-radius: 5px;
+  }
+  
+  .settings button {
+    padding: 8px 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    outline: 1px solid black;
+    border-radius: 5px;
+  }
+  
+  .importExport {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  
+  .importLabel {
+    background-color: #ddd;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .searchBar,
+  .datePicker,
+  .categoryDropdown,
+  .addRevenueBtn {
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  .addRevenueBtn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .tableContainer {
+    overflow-x: auto;
+  }
+  
+  .revenueTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .revenueTable th,
+  .revenueTable td {
+    padding: 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .editBtn,
+  .deleteBtn {
+    padding: 6px 12px;
+    margin: 0 4px;
+    cursor: pointer;
+  }
+  
+  .editBtn {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+  }
+  
+  .deleteBtn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+  }
+  
+  .pagination button {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+  }
+  
+  .pagination button:hover {
+    background-color: #eee;
+  }
+  
+  .pagination .active {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .pagination button:disabled {
+    background-color: #f0f0f0;
+    color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  
+  .tableContainer {
+    overflow: scroll;
+  }
+
+  .tableContainer table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  
+  .tableContainer th,
+  .tableContainer td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    word-wrap: break-word;
+  }
+  
+  .tableContainer th {
+    background-color: #f9f9f9;
+  }
+  

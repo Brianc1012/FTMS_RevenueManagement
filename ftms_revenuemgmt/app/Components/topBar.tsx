@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import '../styles/topbar.css'; // Corrected path to the styles folder
+import '../styles/topbar.css';
 
 const TopBar = () => {
     const [activeModule, setActiveModule] = useState('Accounting'); // State to track the active module

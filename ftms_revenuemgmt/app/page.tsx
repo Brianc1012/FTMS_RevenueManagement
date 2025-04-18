@@ -1,13 +1,13 @@
 import React from 'react';
 import './styles/layout.css';
-import NavBar from './Components/navBar'; // Adjust the path if necessary
-import TopBar from './Components/topBar'; // Adjust the path if necessary
+import NavBar from './Components/navBar';
+import TopBar from './Components/topBar';
+import RevenuePage from './PageContent/revenuePage';
 
 const Page = () => {
   return (
     <>
     <div className="mainContainer">
-      {/*<div className="container">*/}
         
         <div className="navBarContainer">
           <NavBar/>
@@ -20,7 +20,7 @@ const Page = () => {
 
             <div className="pageContainer">
               <div className="contentContainer">
-                <h1>Page Content</h1>
+                <RevenuePage/>
               </div>
             </div>
         </div>

@@ -4,6 +4,7 @@ i {
     align-items: center;
     justify-content: center;
     font-size: 110%;
+    font-family: 'poppins', sans-serif;
 }
 
 .topBar {
@@ -13,6 +14,7 @@ i {
     align-items: center;
     justify-content: center; /* Center the inner content horizontally */
     text-align: center;
+    box-shadow: none;
 }
 
 .topBarItems {
