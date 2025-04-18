@@ -80,7 +80,7 @@ html, body {
   align-items: flex-start;
   justify-content: center;
   border-radius: 16px;
-  overflow: hidden;
+  overflow: scroll;
   position: relative;
 
 }
