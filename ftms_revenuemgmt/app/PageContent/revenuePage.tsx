@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../styles/revenue.css";
+import PaginationComponent from "../Components/pagination";
 
 type RevenueData = {
   id: number;
@@ -11,8 +12,6 @@ type RevenueData = {
   amount: number;
 };
 
-
-
 const revenuePage = () => {
   const [data, setData] = useState<RevenueData[]>([]);
   const [search, setSearch] = useState("");
@@ -20,8 +19,9 @@ const revenuePage = () => {
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 5; // Set how many records to display per page
+  const [pageSize, setPageSize] = useState(5); // Use the new page size state
 
+  const recordsPerPage = pageSize; // Dynamically set records per page
 
   const handleExport = () => {
     const headers = "Date,Category,Source,Amount\n";
@@ -78,18 +78,7 @@ const revenuePage = () => {
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
   const currentRecords = filteredData.slice(indexOfFirstRecord, indexOfLastRecord);
 
-  // Handle page change
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  
-const totalPages = Math.ceil(filteredData.length / recordsPerPage);
-const paginatedData = filteredData.slice(
-  (currentPage - 1) * recordsPerPage,
-  currentPage * recordsPerPage
-);
-
+  const totalPages = Math.ceil(filteredData.length / recordsPerPage);
 
   return (
     <div className="revenuePage">
@@ -148,7 +137,7 @@ const paginatedData = filteredData.slice(
             </tr>
           </thead>
           <tbody>
-            {paginatedData.map((item) => (
+            {currentRecords.map((item) => (
               <tr key={item.id}>
                 <td><input type="checkbox" /></td>
                 <td>{item.date}</td>
@@ -162,30 +151,18 @@ const paginatedData = filteredData.slice(
               </tr>
             ))}
           </tbody>
-
         </table>
         {currentRecords.length === 0 && <p>No records found.</p>}
       </div>
 
       {/* Pagination */}
-      <div className="pagination">
-        <button onClick={() => setCurrentPage(p => p - 1)} disabled={currentPage === 1}>
-          Prev
-        </button>
-        {Array.from({ length: totalPages }, (_, i) => (
-          <button
-            key={i}
-            className={currentPage === i + 1 ? "active" : ""}
-            onClick={() => setCurrentPage(i + 1)}
-          >
-            {i + 1}
-          </button>
-        ))}
-        <button onClick={() => setCurrentPage(p => p + 1)} disabled={currentPage === totalPages}>
-          Next
-        </button>
-      </div>
-
+      <PaginationComponent
+        currentPage={currentPage}
+        totalPages={totalPages}
+        pageSize={pageSize}
+        onPageChange={setCurrentPage}
+        onPageSizeChange={setPageSize}
+      />
     </div>
   );
 };
