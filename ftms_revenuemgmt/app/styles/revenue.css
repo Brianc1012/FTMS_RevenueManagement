@@ -65,6 +65,10 @@ button {
     padding: 8px;
     font-size: 14px;
   }
+
+  #categoryFilter {
+    max-width: max-content;
+  }
   
   .addRevenueBtn {
     background-color: #4CAF50;

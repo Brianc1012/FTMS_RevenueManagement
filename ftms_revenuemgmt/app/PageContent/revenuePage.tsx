@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import "../styles/revenue.css";
 import PaginationComponent from "../Components/pagination";
+import AddRevenueModal from "../Components/addRevenue";
+
 
 type RevenueData = {
   id: number;
@@ -80,6 +82,9 @@ const revenuePage = () => {
 
   const totalPages = Math.ceil(filteredData.length / recordsPerPage);
 
+  // Handle modal state
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <div className="revenuePage">
       {/* Filter Section */}
@@ -104,6 +109,7 @@ const revenuePage = () => {
 
         <select
           value={categoryFilter}
+          id="categoryFilter"
           onChange={(e) => setCategoryFilter(e.target.value)}
         >
           <option value="">All Categories</option>
@@ -112,7 +118,8 @@ const revenuePage = () => {
           <option value="Other">Other</option>
         </select>
 
-        <button>Add Revenue</button>
+        <button onClick={() => setShowModal(true)}>Add Revenue</button>
+        {showModal && <AddRevenueModal onClose={() => setShowModal(false)} />}
 
         <div className="importExport">
           <button onClick={handleExport}>Export CSV</button>
@@ -163,6 +170,7 @@ const revenuePage = () => {
         onPageChange={setCurrentPage}
         onPageSizeChange={setPageSize}
       />
+
     </div>
   );
 };
