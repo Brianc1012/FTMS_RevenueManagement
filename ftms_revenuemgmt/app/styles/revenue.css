@@ -14,6 +14,7 @@ button {
     flex-wrap: wrap;
     gap: 10px;
     margin-bottom: 20px;
+    justify-content: space-between;
   }
   
   .settings input[type="text"],
@@ -28,20 +29,31 @@ button {
     border-radius: 5px;
   }
   
-  .settings button {
+  .settings button{
     padding: 8px 12px;
     font-size: 1rem;
     cursor: pointer;
     outline: 1px solid black;
     border-radius: 5px;
+    width: fit-content;
   }
   
   .importExport {
     display: flex;
     gap: 10px;
     align-items: center;
+    margin-bottom: 1rem;
+    justify-content: flex-end;
   }
   
+  .importExport button, .importLabel {
+    padding: 8px 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    outline: 1px solid black;
+    border-radius: 5px;
+    width: fit-content;
+  }
   
   .importLabel {
     background-color: #ddd;
@@ -55,7 +67,6 @@ button {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 20px;
   }
   
   .searchBar,
@@ -70,8 +81,8 @@ button {
     max-width: max-content;
   }
   
-  .addRevenueBtn {
-    background-color: #4CAF50;
+  #addRevenue {
+    background-color: #961C1E;
     color: white;
     border: none;
     cursor: pointer;
@@ -92,11 +103,19 @@ button {
     border: 1px solid #ddd;
     text-align: center;
   }
+
+  .actionButtons {
+    display: flex;
+    flex-direction: row;
+    wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
   
   .editBtn,
   .deleteBtn {
     padding: 6px 12px;
-    margin: 0 4px;
+    gap: 0px;
     cursor: pointer;
   }
   

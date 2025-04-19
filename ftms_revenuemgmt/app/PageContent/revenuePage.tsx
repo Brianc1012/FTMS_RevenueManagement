@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import "../styles/revenue.css";
 import PaginationComponent from "../Components/pagination";
 import AddRevenueModal from "../Components/addRevenue";
-
+import Swal from 'sweetalert2';
 
 type RevenueData = {
   id: number;
@@ -85,8 +85,46 @@ const revenuePage = () => {
   // Handle modal state
   const [showModal, setShowModal] = useState(false);
 
+
+  // Handle delete action
+  const handleDelete = async (id: number) => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'This will delete the record permanently.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#13CE66',
+      cancelButtonColor: '#961C1E',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+      background: 'white',
+    });
+  
+    if (result.isConfirmed) {
+      setData((prev) => prev.filter((item) => item.id !== id));
+  
+      await Swal.fire({
+        icon: 'success',
+        title: 'Deleted!',
+        text: 'The record has been deleted.',
+        confirmButtonColor: '#961C1E',
+        background: 'white',
+      });
+    }
+  };
+  
+
   return (
     <div className="revenuePage">
+      {/* Import and Export */}
+      <div className="importExport">
+          <button onClick={handleExport}>Export CSV</button>
+          <label className="importLabel">
+            Import CSV
+            <input type="file" accept=".csv" onChange={handleImport} hidden />
+          </label>
+      </div>
+
       {/* Filter Section */}
       <div className="settings">
         <input
@@ -96,37 +134,32 @@ const revenuePage = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        <input
-          type="date"
-          value={dateFrom}
-          onChange={(e) => setDateFrom(e.target.value)}
-        />
-        <input
-          type="date"
-          value={dateTo}
-          onChange={(e) => setDateTo(e.target.value)}
-        />
+        <div className="filters">
+          <input
+            type="date"
+            value={dateFrom}
+            onChange={(e) => setDateFrom(e.target.value)}
+          />
 
-        <select
-          value={categoryFilter}
-          id="categoryFilter"
-          onChange={(e) => setCategoryFilter(e.target.value)}
-        >
-          <option value="">All Categories</option>
-          <option value="Boundary">Boundary</option>
-          <option value="Percentage">Percentage</option>
-          <option value="Other">Other</option>
-        </select>
+          <input
+            type="date"
+            value={dateTo}
+            onChange={(e) => setDateTo(e.target.value)}
+          />
 
-        <button onClick={() => setShowModal(true)}>Add Revenue</button>
-        {showModal && <AddRevenueModal onClose={() => setShowModal(false)} />}
+          <select
+            value={categoryFilter}
+            id="categoryFilter"
+            onChange={(e) => setCategoryFilter(e.target.value)}
+          >
+            <option value="">All Categories</option>
+            <option value="Boundary">Boundary</option>
+            <option value="Percentage">Percentage</option>
+            <option value="Other">Other</option>
+          </select>
 
-        <div className="importExport">
-          <button onClick={handleExport}>Export CSV</button>
-          <label className="importLabel">
-            Import CSV
-            <input type="file" accept=".csv" onChange={handleImport} hidden />
-          </label>
+          <button onClick={() => setShowModal(true)} id='addRevenue'>Add Revenue</button>
+          {showModal && <AddRevenueModal onClose={() => setShowModal(false)} />}
         </div>
       </div>
 
@@ -151,9 +184,9 @@ const revenuePage = () => {
                 <td>{item.category}</td>
                 <td>{item.source}</td>
                 <td>${item.amount.toFixed(2)}</td>
-                <td>
-                  <button>Edit</button>
-                  <button>Delete</button>
+                <td className="actionButtons">
+                  <button className="editBtn">Edit</button>
+                  <button className="deleteBtn" onClick={() => handleDelete(item.id)}>Delete</button>
                 </td>
               </tr>
             ))}
