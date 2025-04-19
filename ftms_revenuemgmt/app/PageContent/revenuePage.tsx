@@ -5,6 +5,7 @@ import "../styles/revenue.css";
 import PaginationComponent from "../Components/pagination";
 import AddRevenueModal from "../Components/addRevenue";
 import Swal from 'sweetalert2';
+import EditRevenueModal from "../Components/editRevenue";
 
 type RevenueData = {
   id: number;
@@ -114,6 +115,11 @@ const revenuePage = () => {
   };
   
 
+  //Handles Edit action
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [recordToEdit, setRecordToEdit] = useState<RevenueData | null>(null);
+
+
   return (
     <div className="revenuePage">
       {/* Import and Export */}
@@ -159,6 +165,7 @@ const revenuePage = () => {
           </select>
 
           <button onClick={() => setShowModal(true)} id='addRevenue'>Add Revenue</button>
+          {/* opens add Revenue Modal */}
           {showModal && <AddRevenueModal onClose={() => setShowModal(false)} />}
         </div>
       </div>
@@ -185,7 +192,9 @@ const revenuePage = () => {
                 <td>{item.source}</td>
                 <td>${item.amount.toFixed(2)}</td>
                 <td className="actionButtons">
-                  <button className="editBtn">Edit</button>
+                  <button className="editBtn" onClick={() => { setRecordToEdit(item); setEditModalOpen(true);}}>
+                    Edit
+                  </button>
                   <button className="deleteBtn" onClick={() => handleDelete(item.id)}>Delete</button>
                 </td>
               </tr>
@@ -194,6 +203,25 @@ const revenuePage = () => {
         </table>
         {currentRecords.length === 0 && <p>No records found.</p>}
       </div>
+        
+
+      {/* Edit Revenue Modal */}
+      {editModalOpen && recordToEdit && (
+        <EditRevenueModal
+          record={recordToEdit}
+          onClose={() => {
+            setEditModalOpen(false);
+            setRecordToEdit(null);
+          }}
+          onSave={(updatedRecord) => {
+            setData((prev) =>
+              prev.map((rec) => (rec.id === updatedRecord.id ? updatedRecord : rec))
+            );
+            setEditModalOpen(false);
+            setRecordToEdit(null);
+          }}
+        />
+      )}
 
       {/* Pagination */}
       <PaginationComponent
