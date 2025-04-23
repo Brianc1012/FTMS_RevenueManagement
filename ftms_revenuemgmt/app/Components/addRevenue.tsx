@@ -63,6 +63,7 @@ const AddRevenue: React.FC<AddRevenueProps> = ({ onClose }) => {
   };
 
   return (
+    <>
     <div className="modalOverlay">
       <div className="addRevenueModal">
         <div className="modalHeader">
@@ -129,6 +130,7 @@ const AddRevenue: React.FC<AddRevenueProps> = ({ onClose }) => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 
