@@ -3,7 +3,11 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import '../styles/addRevenue.css';
+import {showEmptyFieldWarning, showAddConfirmation, showAddSuccess, showInvalidCategoryAlert, showInvalidSourceAlert, showInvalidAmountAlert} from '../utility/addRevenueAlerts';
+import { isValidCategory, isValidSource, isValidAmount } from '../utility/validation';
 
+
+//============================SWEET ALERT 2=========================
 type AddRevenueProps = {
   onClose: () => void;
 };
@@ -25,72 +29,74 @@ const AddRevenue: React.FC<AddRevenueProps> = ({ onClose }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!formData.category || !formData.source || !formData.amount) {
-      Swal.fire({
-        icon: 'warning',
-        text: 'Please fill out all fields.',
-        confirmButtonColor: '#961C1E',
-        background: 'white',
-      });
+  
+    const { category, source, amount } = formData;
+  
+    if (!category || !source || !amount) {
+      await showEmptyFieldWarning();
       return;
     }
-
-    const result = await Swal.fire({
-      title: 'Confirmation',
-      html: `<p>Are you sure you want to <b>ADD</b> this record?</p>`,
-      showCancelButton: true,
-      confirmButtonText: 'Confirm',
-      cancelButtonText: 'Cancel',
-      background: 'white',
-      confirmButtonColor: '#13CE66',
-      cancelButtonColor: '#961C1E',
-    });
-
+  
+    if (!isValidCategory(category)) {
+      await showInvalidCategoryAlert();
+      return;
+    }
+  
+    if (!isValidSource(source)) {
+      await showInvalidSourceAlert();
+      return;
+    }
+  
+    if (!isValidAmount(amount)) {
+      await showInvalidAmountAlert();
+      return;
+    }
+  
+    const result = await showAddConfirmation();
+  
     if (result.isConfirmed) {
       console.log('Revenue added:', formData);
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Added!',
-        text: 'Your revenue record has been added.',
-        confirmButtonColor: '#961C1E',
-        background: 'white',
-      });
-
-      onClose(); // Close modal after confirming
+      await showAddSuccess();
+      onClose();
     }
   };
+  
+
+  //============================END OF SWEET ALERT 2=========================
 
   return (
     <>
-    <div className="modalOverlay">
-      <div className="addRevenueModal">
-        <div className="modalHeader">
-          <h2>Add Revenue</h2>
-          <div className="timeDate">
-            <div className="currTime">Time</div>
-            <div className="currDate">Date</div>
-          </div>
-        </div>
-
-        <form onSubmit={handleSubmit}>
-          <div className="formFields">
-            <div className="formField">
-              <label htmlFor="category">Category</label>
-              <select
-                id="category"
-                name="category"
-                value={formData.category}
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">Select Category</option>
-                <option value="Boundary">Boundary</option>
-                <option value="Percentage">Percentage</option>
-                <option value="Other">Other</option>
-              </select>
+      <div className="modalOverlay">
+        <div className="addRevenueModal">
+          <div className="modalHeader">
+            <h2>Add Revenue</h2>
+            <div className="timeDate">
+              <div className="currTime">Time</div>
+              <div className="currDate">Date</div>
             </div>
+          </div>
+
+          <form onSubmit={handleSubmit}>
+            {/* CATEGORY */}
+            <div className="formFields">
+              <div className="formField">
+                <label htmlFor="category">Category</label>
+                <select
+                  id="category"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Category</option>
+                  <option value="Boundary">Boundary</option>
+                  <option value="Percentage">Percentage</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            {/* SOURCE */}
             <div className="formField">
               <label htmlFor="source">Source</label>
               <input
@@ -103,6 +109,8 @@ const AddRevenue: React.FC<AddRevenueProps> = ({ onClose }) => {
                 required
               />
             </div>
+
+            {/* AMOUNT */}
             <div className="formField">
               <label htmlFor="amount">Amount</label>
               <input
@@ -115,21 +123,18 @@ const AddRevenue: React.FC<AddRevenueProps> = ({ onClose }) => {
                 required
               />
             </div>
-          </div>
 
-          <div className="modalButtons">
-            <div className="buttonContainer">
-              <button type="button" className="cancelButton" onClick={onClose}>
-                Cancel
-              </button>
-              <button type="submit" className="addButton">
-                Add
-              </button>
+            {/* SUBMIT BUTTON */}
+            <div className="modalButtons">
+              <div className="buttonContainer">
+                <button type="button" className="cancelButton" onClick={onClose}> Cancel </button>
+                <button type="submit" className="addButton"> Add </button>
+              </div>
             </div>
-          </div>
-        </form>
+
+          </form>
+        </div>
       </div>
-    </div>
     </>
   );
 };

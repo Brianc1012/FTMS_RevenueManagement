@@ -161,6 +161,7 @@ const revenuePage = () => {
             <option value="">All Categories</option>
             <option value="Boundary">Boundary</option>
             <option value="Percentage">Percentage</option>
+            <option value="Percentage">Rental</option>
             <option value="Other">Other</option>
           </select>
 
