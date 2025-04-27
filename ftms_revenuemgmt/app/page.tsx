@@ -1,33 +1,57 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react'; 
 import './styles/layout.css';
-import NavBar from './Components/navBar';
+import NavBar from './Components/navBar'; 
 import TopBar from './Components/topBar';
 import RevenuePage from './PageContent/revenuePage';
+import ExpensePage from './PageContent/expensePage'; 
 
 const Page = () => {
+  // === Create states to manage the active module and submodule ===
+  const [activeModule, setActiveModule] = useState<string>('Dashboard');
+  const [activeSubModule, setActiveSubModule] = useState<string>('');
+
+  // === Render content based on active module/submodule ===
+  const renderContent = () => {
+    if (activeModule === 'Revenue Management') {
+      return <RevenuePage />;
+    }
+
+    if (activeModule === 'Expense Management') {
+      return <ExpensePage />;
+    }
+    // Add more if you want other modules later
+    return <div>Select a module</div>;
+  };
+
   return (
-    <>
     <div className="mainContainer">
-        
-        <div className="navBarContainer">
-          <NavBar/>
+      
+      {/* Sidebar Navbar */}
+      <div className="navBarContainer">
+        <NavBar 
+          activeModule={activeModule}
+          activeSubModule={activeSubModule}
+          setActiveModule={setActiveModule}
+          setActiveSubModule={setActiveSubModule}
+        />
+      </div>
+
+      {/* Main Content */}
+      <div className="mainContent">
+        <div className="topBarContainer">
+          <TopBar />
         </div>
 
-        <div className="mainContent">
-            <div className="topBarContainer">
-              <TopBar/>
-            </div>
-
-            <div className="pageContainer">
-              <div className="contentContainer">
-                <RevenuePage/>
-              </div>
-            </div>
+        <div className="pageContainer">
+          <div className="contentContainer">
+            {renderContent()}
+          </div>
         </div>
-        
+      </div>
+
     </div>
-    </>
-    
   );
 };
 
