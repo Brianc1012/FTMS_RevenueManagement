@@ -6,6 +6,7 @@ import NavBar from './Components/navBar';
 import TopBar from './Components/topBar';
 import RevenuePage from './PageContent/revenuePage';
 import ExpensePage from './PageContent/expensePage'; 
+import DashboardPage from './PageContent/dashboardPage';
 
 const Page = () => {
   // === Create states to manage the active module and submodule ===
@@ -14,6 +15,10 @@ const Page = () => {
 
   // === Render content based on active module/submodule ===
   const renderContent = () => {
+    if (activeModule === 'Dashboard') {
+      return <DashboardPage />;
+    }
+
     if (activeModule === 'Revenue Management') {
       return <RevenuePage />;
     }
