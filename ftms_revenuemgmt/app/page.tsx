@@ -7,6 +7,7 @@ import TopBar from './Components/topBar';
 import RevenuePage from './PageContent/revenuePage';
 import ExpensePage from './PageContent/expensePage'; 
 import DashboardPage from './PageContent/dashboardPage';
+import AuditPage from './PageContent/auditPage';
 
 const Page = () => {
   // === Create states to manage the active module and submodule ===
@@ -25,6 +26,10 @@ const Page = () => {
 
     if (activeModule === 'Expense Management') {
       return <ExpensePage />;
+    }
+
+    if (activeModule === 'Audit Logs') {
+      return <AuditPage />;
     }
     // Add more if you want other modules later
     return <div>Select a module</div>;
