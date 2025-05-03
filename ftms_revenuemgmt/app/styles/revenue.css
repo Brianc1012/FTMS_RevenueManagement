@@ -166,14 +166,26 @@ button {
   }
   
   .tableContainer th,
-  .tableContainer td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: center;
-    word-wrap: break-word;
-  }
-  
-  .tableContainer th {
-    background-color: #f9f9f9;
-  }
+    .tableContainer td {
+      border: none;
+      padding: 10px;
+      text-align: center;
+      word-wrap: break-word;
+    }
+    
+    .tableContainer th {
+      background-color: #961C1E;
+      color: white;
+    }
+
+    tr {
+        transition: 0.3s ease;
+    }
+
+    tr:hover {
+        background-color: #FF4949;
+        color: white;
+        transition: scale(1.5);
+        font-weight: bold;
+    }
   

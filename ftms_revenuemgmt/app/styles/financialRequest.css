@@ -29,39 +29,6 @@ button {
       border-radius: 5px;
     }
     
-    .settings button{
-      padding: 8px 12px;
-      font-size: 1rem;
-      cursor: pointer;
-      outline: 1px solid black;
-      border-radius: 5px;
-      width: fit-content;
-    }
-    
-    .importExport {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 1rem;
-      justify-content: flex-end;
-    }
-    
-    .importExport button, .importLabel {
-      padding: 8px 12px;
-      font-size: 1rem;
-      cursor: pointer;
-      outline: 1px solid black;
-      border-radius: 5px;
-      width: fit-content;
-    }
-    
-    .importLabel {
-      background-color: #ddd;
-      padding: 8px 12px;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-    
     
     .filters {
       display: flex;
@@ -161,13 +128,25 @@ button {
     
     .tableContainer th,
     .tableContainer td {
-      border: 1px solid #ccc;
+      border: none;
       padding: 10px;
       text-align: center;
       word-wrap: break-word;
     }
     
     .tableContainer th {
-      background-color: #f9f9f9;
+      background-color: #961C1E;
+      color: white;
+    }
+
+    tr {
+        transition: 0.3s ease;
+    }
+
+    tr:hover {
+        background-color: #FF4949;
+        color: white;
+        transition: scale(1.5);
+        font-weight: bold;
     }
     
