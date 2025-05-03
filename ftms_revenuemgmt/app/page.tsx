@@ -8,6 +8,7 @@ import RevenuePage from './PageContent/revenuePage';
 import ExpensePage from './PageContent/expensePage'; 
 import DashboardPage from './PageContent/dashboardPage';
 import AuditPage from './PageContent/auditPage';
+import FinancialRequestPage from './PageContent/financialRequestPage';
 
 const Page = () => {
   // === Create states to manage the active module and submodule ===
@@ -16,24 +17,26 @@ const Page = () => {
 
   // === Render content based on active module/submodule ===
   const renderContent = () => {
-    if (activeModule === 'Dashboard') {
-      return <DashboardPage />;
-    }
+    switch (activeModule) {
+      case 'Dashboard':
+        return <DashboardPage />;
+      
+      case 'Revenue Management':
+        return <RevenuePage />;
 
-    if (activeModule === 'Revenue Management') {
-      return <RevenuePage />;
-    }
+      case 'Expense Management':
+        return <ExpensePage />;
+      
+      case 'Financial Requests':
+        return <FinancialRequestPage />;
 
-    if (activeModule === 'Expense Management') {
-      return <ExpensePage />;
-    }
+      case 'Audit Logs':
+        return <AuditPage />;
 
-    if (activeModule === 'Audit Logs') {
-      return <AuditPage />;
+      default:
+        return <div>Module not found</div> //YOU REPLACE THIS WITH ERROR 404 or something similar
     }
-    // Add more if you want other modules later
-    return <div>Select a module</div>;
-  };
+  }
 
   return (
     <div className="mainContainer">
