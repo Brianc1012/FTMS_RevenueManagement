@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import "../styles/expense.css"; // External CSS
 import PaginationComponent from "../Components/pagination";
-//import AddExpenseModal from "../Components/addExpense";
+import AddExpenseModal from "../Components/addExpense";
 //import EditExpenseModal from "../Components/editExpense";
 import Swal from "sweetalert2";
 
@@ -72,6 +72,9 @@ const ExpensePage = () => {
     }
   };
 
+  // Handle modal state
+    const [showModal, setShowModal] = useState(false);
+
   return (
     <div className="expensePage">
 
@@ -108,14 +111,13 @@ const ExpensePage = () => {
             <option value="Other">Other</option>
           </select>
 
-          <button id="addExpense" onClick={() => setShowAddModal(true)}>
+          <button id="addExpense" onClick={() => setShowModal(true)}>
             Add Expense
           </button>
           
-          {/* Add Expense Modal 
           {showAddModal && (
-            <AddExpenseModal onClose={() => setShowAddModal(false)} />
-          )}*/}
+            <AddExpenseModal onClose={() => setShowModal(false)} />
+          )}
         </div>
       </div>
 

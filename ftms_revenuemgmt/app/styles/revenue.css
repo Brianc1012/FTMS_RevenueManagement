@@ -182,10 +182,10 @@ button {
         transition: 0.3s ease;
     }
 
-    tr:hover {
-        background-color: #FF4949;
-        color: white;
-        transition: scale(1.5);
-        font-weight: bold;
-    }
+    tbody tr:hover {
+      background-color: #FF4949;
+      color: white;
+      transform: scale(1.02);
+      font-weight: bold;
+  }
   
