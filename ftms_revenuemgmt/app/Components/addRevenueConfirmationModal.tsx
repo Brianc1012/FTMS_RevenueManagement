@@ -1,36 +1,53 @@
 import React from 'react';
 import '../styles/confirmationModal.css';
 
-type Props = {
-  onCancel: () => void;
+type ConfirmationModalProps = {
+  isOpen: boolean;
+  action?: string;
   onConfirm: () => void;
+  onCancel: () => void;
 };
 
-const AddRevenueConfirmationModal: React.FC<Props> = ({ onCancel, onConfirm }) => {
+const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
+  isOpen,
+  action = "ADD",
+  onConfirm,
+  onCancel
+}) => {
+  if (!isOpen) return null;
+
   return (
-    <div className='modalOverlay'>
+    <div className="confirmationOverlay">
       <div className="confirmationModal">
-        <div className="modalHeader">
+        <div className="confirmationHeader">
           <h2>Confirmation</h2>
         </div>
-
-        <div className="confirmationMessage">
-          <p>Are you sure you want to <b>ADD</b> this record?</p>
-        </div>
-
-        <div className="modalButtons">
-          <div className="buttonContainer">
-            <button type="button" className="cancelButton" onClick={onCancel}>
-              Cancel
-            </button>
-            <button type="submit" className="confirmButton" onClick={onConfirm}>
-              Confirm
-            </button>
+        
+        <div className="confirmationContent">
+          <div className="confirmationMessage">
+            Are you sure you want to {action} this record?
           </div>
+        </div>
+        
+        <div className="confirmationButtons">
+          <button 
+            type="button" 
+            className="confirmButton" 
+            onClick={onConfirm}
+          >
+            Confirm
+          </button>
+          <button 
+            type="button" 
+            className="cancelButton" 
+            onClick={onCancel}
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>
   );
 };
 
-export default AddRevenueConfirmationModal;
+export default ConfirmationModal;
