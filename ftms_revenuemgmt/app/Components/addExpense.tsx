@@ -1,103 +1,96 @@
-'use client'
+// AddExpenseModal.tsx
+'use client';
 
-import React, {useState} from 'react'
+import React, { useState } from 'react';
 import Swal from 'sweetalert2';
-//import '../styles/addExpense.css';
-import '../styles/addRevenue.css';
-import {showEmptyFieldWarning, showAddConfirmation, showAddSuccess, showInvalidCategoryAlert, showInvalidSourceAlert, showInvalidAmountAlert} from '../utility/addRevenueAlerts';
-import { isValidCategory, isValidSource, isValidAmount } from '../utility/validation';
+import '../styles/addExpense.css';
+import {
+  showEmptyFieldWarning,
+  showAddConfirmation,
+  showAddSuccess,
+  showInvalidCategoryAlert,
+  showInvalidSourceAlert,
+  showInvalidAmountAlert,
+} from '../utility/addRevenueAlerts';
+import {
+  isValidCategory,
+  isValidSource,
+  isValidAmount,
+} from '../utility/validation';
 
-const addExpense = () => {
-    type AddRevenueProps = {
-      onClose: () => void;
-    };
-    
-    const AddRevenue: React.FC<AddRevenueProps> = ({ onClose }) => {
-      const [formData, setFormData] = useState({
-        category: '',
-        expense: '',
-        amount: '',
-      });
+type AddExpenseModalProps = {
+  onClose: () => void;
+};
 
-      //--------------------SWEET ALERTS ---------------------------//
-      const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-          const { name, value } = e.target;
-          setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-          }));
-        };
-      
-        const handleSubmit = async (e: React.FormEvent) => {
-          e.preventDefault();
-        
-          const { category, expense, amount } = formData;
-        
-          if (!category || !expense || !amount) {
-            await showEmptyFieldWarning();
-            return;
-          }
-        
-          if (!isValidCategory(category)) {
-            await showInvalidCategoryAlert();
-            return;
-          }
-        
-          if (!isValidSource(expense)) {
-            await showInvalidSourceAlert();
-            return;
-          }
-        
-          if (!isValidAmount(amount)) {
-            await showInvalidAmountAlert();
-            return;
-          }
-        
-          const result = await showAddConfirmation();
-        
-          if (result.isConfirmed) {
-            console.log('Revenue added:', formData);
-            await showAddSuccess();
-            onClose();
-          }
-        };
-        
-      
-        //============================END OF SWEET ALERT 2=========================
+const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ onClose }) => {
+  const [formData, setFormData] = useState({
+    category: '',
+    expense: '',
+    amount: '',
+  });
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const { category, expense, amount } = formData;
+
+    if (!category || !expense || !amount) {
+      await showEmptyFieldWarning();
+      return;
+    }
+
+    if (!isValidCategory(category)) {
+      await showInvalidCategoryAlert();
+      return;
+    }
+
+    if (!isValidSource(expense)) {
+      await showInvalidSourceAlert();
+      return;
+    }
+
+    if (!isValidAmount(amount)) {
+      await showInvalidAmountAlert();
+      return;
+    }
+
+    const result = await showAddConfirmation();
+    if (result.isConfirmed) {
+      console.log('Expense added:', formData);
+      await showAddSuccess();
+      onClose();
+    }
+  };
 
   return (
-    <>
-      <div className="modalOverlay">
-        <div className="addRevenueModal">
-          <div className="modalHeader">
-            <h2>Add Revenue</h2>
-            <div className="timeDate">
-              <div className="currTime">Time</div>
-              <div className="currDate">Date</div>
-            </div>
-          </div>
+    <div className="modalOverlay">
+      <div className="addExpenseModal">
+        <div className="modalHeader">
+          <h2>Add Expense</h2>
+        </div>
 
-          <form onSubmit={handleSubmit}>
-            {/* CATEGORY */}
-            <div className="formFields">
-              <div className="formField">
-                <label htmlFor="category">Category</label>
-                <select
-                  id="category"
-                  name="category"
-                  value={formData.category}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="Other">Other Expenses</option>
-                </select>
-              </div>
-            </div>
-
-            {/* SOURCE */}
+        <form onSubmit={handleSubmit}>
+          <div className="formFields">
             <div className="formField">
-              <label htmlFor="expense">Expenses</label>
+              <label htmlFor="category">Category</label>
+              <select
+                id="category"
+                name="category"
+                value={formData.category}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="Other">Other Expenses</option>
+              </select>
+            </div>
+
+            <div className="formField">
+              <label htmlFor="expense">Expense</label>
               <input
                 type="text"
                 id="expense"
@@ -109,7 +102,6 @@ const addExpense = () => {
               />
             </div>
 
-            {/* AMOUNT */}
             <div className="formField">
               <label htmlFor="amount">Amount</label>
               <input
@@ -122,21 +114,20 @@ const addExpense = () => {
                 required
               />
             </div>
+          </div>
 
-            {/* SUBMIT BUTTON */}
-            <div className="modalButtons">
-              <div className="buttonContainer">
-                <button type="button" className="cancelButton" onClick={onClose}> Cancel </button>
-                <button type="submit" className="addButton"> Add </button>
-              </div>
-            </div>
-
-          </form>
-        </div>
+          <div className="modalButtons">
+            <button type="button" className="cancelButton" onClick={onClose}>
+              Cancel
+            </button>
+            <button type="submit" className="addButton">
+              Add
+            </button>
+          </div>
+        </form>
       </div>
-    </>
-  )
-}
-}
+    </div>
+  );
+};
 
-export default addExpense
+export default AddExpenseModal;

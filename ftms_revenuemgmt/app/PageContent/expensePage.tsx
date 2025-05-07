@@ -26,7 +26,7 @@ const ExpensePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
 
-  const [showAddModal, setShowAddModal] = useState(false);
+  const [showExpenseModal, setShowExpenseModal] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [recordToEdit, setRecordToEdit] = useState<ExpenseData | null>(null);
 
@@ -72,9 +72,6 @@ const ExpensePage = () => {
     }
   };
 
-  // Handle modal state
-    const [showModal, setShowModal] = useState(false);
-
   return (
     <div className="expensePage">
 
@@ -111,12 +108,15 @@ const ExpensePage = () => {
             <option value="Other">Other</option>
           </select>
 
-          <button id="addExpense" onClick={() => setShowModal(true)}>
+
+          <button id="addExpense" onClick={() => {
+            console.log('Open modal button is clicked');
+            setShowExpenseModal(true)}} itemID="addExpense">
             Add Expense
           </button>
           
-          {showAddModal && (
-            <AddExpenseModal onClose={() => setShowModal(false)} />
+          {showExpenseModal && (
+            <AddExpenseModal onClose={() => setShowExpenseModal(false)} />
           )}
         </div>
       </div>
