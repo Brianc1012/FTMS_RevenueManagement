@@ -12,7 +12,8 @@ import {
   showInvalidCategoryAlert,
   showInvalidSourceAlert,
   showInvalidAmountAlert,
-} from '../utility/addRevenueAlerts';
+  showError, 
+  showSuccess} from '../utility/Alerts';
 import {
   isValidCategory,
   isValidSource,
@@ -21,13 +22,24 @@ import {
 
 import ItemList from '../Components/addExpense_itemList'
 
+
+
 //---------------------DECLARATIONS HERE----------------------//
+
+type ExpenseData = {
+  id: number;
+  date: string;
+  department: string;
+  description: string;
+  amount: number;
+};
 
 type AddExpenseModalProps = {
   onClose: () => void;
+  onAddSuccess: (newRecord: ExpenseData) => void;
 };
 
-const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ onClose }) => {
+const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ onClose, onAddSuccess }) => {
   //set form data
   const [formData, setFormData] = useState({
     category: '',
@@ -36,7 +48,7 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ onClose }) => {
   });
 
 
-  //set the current date and time
+  //----------------set the current date and time----------------//
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
   //Get the current date and time
@@ -56,6 +68,8 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ onClose }) => {
     }, []);
 
 
+
+//-------------------EVENT HANDLER------------------//
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -87,13 +101,49 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({ onClose }) => {
     }
 
     const result = await showAddConfirmation();
+
     if (result.isConfirmed) {
-      console.log('Expense added:', formData);
-      await showAddSuccess();
-      onClose();
+      try {
+          const newRecord: ExpenseData = {
+            id: Date.now(),
+            date: new Date().toISOString().split('T')[0], // YYYY-MM-DD
+            department: "Operations", // or dynamically if needed
+            description: expense,
+            amount: parseFloat(amount),
+          }
+        console.log('Expense added:', formData);
+
+        await showSuccess("Expense added successfully.");
+        onAddSuccess(newRecord);
+        onClose();
+      }
+      catch (err){
+        showError ("Failed to add expense.")
+      }
+      
     }
   };
 
+  //-----------------SWAL FOR ADD EXPENSE---------------//
+    /*const addExpenseAlerts = ({onClose, onAddSuccess}) => {
+      const handleAddExpense = () => {
+        try {
+          // simulate add logic
+          onAddSuccess({
+            id: Date.now(),
+            date: "2025-05-08",
+            department: "Operations",
+            description: "New Equipment",
+            amount: 5000,
+          });
+          showSuccess("Expense added successfully!");
+          onClose();
+        } catch (err) {
+          showError("Failed to add expense.");
+        }
+      }
+    }
+*/
 
   //---------------------BODY HERE----------------------//
   return (

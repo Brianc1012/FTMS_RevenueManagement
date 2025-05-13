@@ -79,7 +79,6 @@ const addExpense_itemList = () => {
                 </tr>
             </tbody>
         </table>
-        
     </div>
   )
 }

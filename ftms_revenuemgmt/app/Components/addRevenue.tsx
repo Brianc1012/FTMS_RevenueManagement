@@ -10,7 +10,7 @@ import {
   showInvalidCategoryAlert,
   showInvalidSourceAlert,
   showInvalidAmountAlert
-} from '../utility/addRevenueAlerts';
+} from '../utility/Alerts';
 import { isValidCategory, isValidSource, isValidAmount } from '../utility/validation';
 
 type AddRevenueProps = {

@@ -6,6 +6,8 @@ import PaginationComponent from "../Components/pagination";
 import AddExpenseModal from "../Components/addExpense";
 //import EditExpenseModal from "../Components/editExpense";
 import Swal from "sweetalert2";
+import { showSuccess, showError } from '../utility/Alerts';
+
 
 // ===== Data Type =====
 type ExpenseData = {
@@ -72,7 +74,13 @@ const ExpensePage = () => {
     }
   };
 
+
+  
+  
+
+
   return (
+
     <div className="expensePage">
 
       {/* Filter/Search Controls */}
@@ -110,14 +118,9 @@ const ExpensePage = () => {
 
 
           <button id="addExpense" onClick={() => {
-            console.log('Open modal button is clicked');
             setShowExpenseModal(true)}} itemID="addExpense">
             Add Expense
           </button>
-          
-          {showExpenseModal && (
-            <AddExpenseModal onClose={() => setShowExpenseModal(false)} />
-          )}
         </div>
       </div>
 
@@ -193,6 +196,17 @@ const ExpensePage = () => {
         onPageChange={setCurrentPage}
         onPageSizeChange={setPageSize}
       />
+
+
+         {/* Modal */}
+      {showExpenseModal && (
+        <AddExpenseModal
+          onClose={() => setShowExpenseModal(false)}
+          onAddSuccess={(newRecord: ExpenseData) => {
+            setData(prev => [...prev, newRecord]);
+          }}
+        />
+      )}
 
     </div>
   );

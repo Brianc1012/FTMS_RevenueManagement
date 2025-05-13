@@ -1,5 +1,6 @@
 import Swal from 'sweetalert2';
 
+//--------------------ADD REVENUE RECORD-------------------//
 export const showEmptyFieldWarning = () => {
   return Swal.fire({
     icon: 'warning',
@@ -63,6 +64,34 @@ export const showAddSuccess = () => {
   });
 };
 
+
+//-----------------------ADD EXPENSE RECORD---------------------//
+
+export const showSuccess = (message: string) => {
+  Swal.fire({
+    icon: 'success',
+    title: 'Success',
+    text: message,
+    confirmButtonColor: '#961C1E',
+    background: 'white',
+    timer: 3000,
+    timerProgressBar: true,
+    showConfirmButton: false,
+  });
+};
+
+export const showError = (message: string) => {
+  Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    text: message,
+    confirmButtonColor: '#961C1E',
+    background: 'white',
+    timer: 3000,
+    timerProgressBar: true,
+    showConfirmButton: false,
+  });
+};
 
 
 

@@ -1,3 +1,15 @@
+.tableContainer, .itemList, .scrollable-tbody {
+    overflow: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.tableContainer::-webkit-scrollbar, 
+.itemList::-webkit-scrollbar, 
+.scrollable-tbody::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
 .itemList {
     width: 100%;
     border-collapse: collapse;
