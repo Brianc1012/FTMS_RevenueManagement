@@ -56,6 +56,7 @@ const EditRevenueModal: React.FC<EditProps> = ({ record, onClose, onSave }) => {
         <select value={category} onChange={(e) => setCategory(e.target.value)}>
           <option value="Boundary">Boundary</option>
           <option value="Percentage">Percentage</option>
+          <option value="Bus Rental">Bus Rental</option>
           <option value="Other">Other</option>
         </select>
 

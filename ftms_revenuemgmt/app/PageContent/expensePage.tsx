@@ -6,6 +6,8 @@ import PaginationComponent from "../Components/pagination";
 import AddExpenseModal from "../Components/addExpense";
 //import EditExpenseModal from "../Components/editExpense";
 import Swal from "sweetalert2";
+import { showSuccess, showError } from '../utility/Alerts';
+
 
 // ===== Data Type =====
 type ExpenseData = {
@@ -26,7 +28,7 @@ const ExpensePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
 
-  const [showAddModal, setShowAddModal] = useState(false);
+  const [showExpenseModal, setShowExpenseModal] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [recordToEdit, setRecordToEdit] = useState<ExpenseData | null>(null);
 
@@ -72,10 +74,13 @@ const ExpensePage = () => {
     }
   };
 
-  // Handle modal state
-    const [showModal, setShowModal] = useState(false);
+
+  
+  
+
 
   return (
+
     <div className="expensePage">
 
       {/* Filter/Search Controls */}
@@ -111,13 +116,11 @@ const ExpensePage = () => {
             <option value="Other">Other</option>
           </select>
 
-          <button id="addExpense" onClick={() => setShowModal(true)}>
+
+          <button id="addExpense" onClick={() => {
+            setShowExpenseModal(true)}} itemID="addExpense">
             Add Expense
           </button>
-          
-          {showAddModal && (
-            <AddExpenseModal onClose={() => setShowModal(false)} />
-          )}
         </div>
       </div>
 
@@ -193,6 +196,17 @@ const ExpensePage = () => {
         onPageChange={setCurrentPage}
         onPageSizeChange={setPageSize}
       />
+
+
+         {/* Modal */}
+      {showExpenseModal && (
+        <AddExpenseModal
+          onClose={() => setShowExpenseModal(false)}
+          onAddSuccess={(newRecord: ExpenseData) => {
+            setData(prev => [...prev, newRecord]);
+          }}
+        />
+      )}
 
     </div>
   );
