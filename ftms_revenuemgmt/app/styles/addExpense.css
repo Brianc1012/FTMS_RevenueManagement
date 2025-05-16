@@ -74,8 +74,16 @@
     margin-bottom: 1rem;
   }
 
-    .formField input, label, select {
+    .formField label {
+      width: 100%;
+      padding: 8px 0px;
+    }
+
+    .formField input, select {
         width: 100%;
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
     }
 
     .formField {

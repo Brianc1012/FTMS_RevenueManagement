@@ -53,25 +53,31 @@ const EditRevenueModal: React.FC<EditProps> = ({ record, onClose, onSave }) => {
           <p><strong>Date:</strong> {record.date}</p>
         </div>
 
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
-          <option value="Boundary">Boundary</option>
-          <option value="Percentage">Percentage</option>
-          <option value="Other">Other</option>
-        </select>
+        <div className="row">
+          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+            <option value="Boundary">Boundary</option>
+            <option value="Percentage">Percentage</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
 
-        <input
-          type="text"
-          placeholder="Source"
-          value={source}
-          onChange={(e) => setSource(e.target.value)}
-        />
+        
+        <div className="editRevenue_row">
+          <input
+            type="text"
+            placeholder="Source"
+            value={source}
+            onChange={(e) => setSource(e.target.value)}
+          />
 
-        <input
-          type="number"
-          placeholder="Amount"
-          value={amount}
-          onChange={(e) => setAmount(parseFloat(e.target.value))}
-        />
+          <input
+            type="number"
+            placeholder="Amount"
+            value={amount}
+            onChange={(e) => setAmount(parseFloat(e.target.value))}
+          />
+        </div>
+        
 
         <div className="modalButtons">
           <div className="buttonContainer">

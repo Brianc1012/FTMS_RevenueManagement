@@ -20,26 +20,25 @@ export const showInvalidCategoryAlert = () => {
     });
   };
   
-  export const showInvalidSourceAlert = () => {
-    return Swal.fire({
-      icon: 'error',
-      title: 'Invalid Source',
-      text: 'Source must be 3-50 alphabetic characters.',
-      confirmButtonColor: '#961C1E',
-      background: 'white',
-    });
-  };
-  
-  export const showInvalidAmountAlert = () => {
-    return Swal.fire({
-      icon: 'error',
-      title: 'Invalid Amount',
-      text: 'Amount must be a positive number.',
-      confirmButtonColor: '#961C1E',
-      background: 'white',
-    });
-  };
-  
+export const showInvalidSourceAlert = () => {
+  return Swal.fire({
+    icon: 'error',
+    title: 'Invalid Source',
+    text: 'Source must be 3-50 alphabetic characters.',
+    confirmButtonColor: '#961C1E',
+    background: 'white',
+  });
+};
+
+export const showInvalidAmountAlert = () => {
+  return Swal.fire({
+    icon: 'error',
+    title: 'Invalid Amount',
+    text: 'Amount must be a positive number.',
+    confirmButtonColor: '#961C1E',
+    background: 'white',
+  });
+}
 
 export const showAddConfirmation = () => {
   return Swal.fire({

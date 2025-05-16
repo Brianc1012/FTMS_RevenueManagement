@@ -36,32 +36,7 @@ button {
       outline: 1px solid black;
       border-radius: 5px;
       width: fit-content;
-    }
-    
-    .importExport {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 1rem;
-      justify-content: flex-end;
-    }
-    
-    .importExport button, .importLabel {
-      padding: 8px 12px;
-      font-size: 1rem;
-      cursor: pointer;
-      outline: 1px solid black;
-      border-radius: 5px;
-      width: fit-content;
-    }
-    
-    .importLabel {
-      background-color: #ddd;
-      padding: 8px 12px;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-    
+    }   
     
     .filters {
       display: flex;

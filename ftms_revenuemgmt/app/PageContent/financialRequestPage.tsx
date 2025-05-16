@@ -143,41 +143,46 @@ const financialRequestPage = () => {
         <table>
           <thead>
             <tr>
-              <th>Date</th> {/*Request Date*/}
-              <th>Request</th> {/*Request Title */}
-              <th>Department</th> {/*Department where request came from */}
-              <th>Amount</th> {/*Requested Amount*/}
-              <th>Status</th> {/*Pending/ Approved / Rejected */}
-              <th>Priority</th> {/*Priority Level (High - Red, Medium - Orange, Low - blue)*/}
+              <>
+                <th>Date</th> {/*Request Date*/}
+                <th>Request</th> {/*Request Title */}
+                <th>Department</th> {/*Department where request came from */}
+                <th>Amount</th> {/*Requested Amount*/}
+                <th>Status</th> {/*Pending/ Approved / Rejected */}
+                <th>Priority</th> {/*Priority Level (High - Red, Medium - Orange, Low - blue)*/}
+              </>
             </tr>
           </thead>
-          <tbody>
-            {/*This Maps/Lists the records of requests*/}
+          <tbody>{/*This Maps/Lists the records of requests*/}
+            
             {currentRecords.map((item) => (
               <tr key={item.id}>
-                <td>{item.date}</td>
-                <td>{item.request}</td>
-                <td>{item.department}</td>
-                <td>₱{item.amount.toFixed(2)}</td>
-                <td>{
-                    item.status === 1
-                        ? 'approved'
-                    : item.status == 2
-                        ? 'pending'
-                    : item.status == 3
-                        ? 'rejected'
-                    : 'not valid stat'
-                    }</td>
-                <td>{
-                        item.priority === 1
-                            ? 'low'
-                        : item.priority === 2
-                            ? 'medium'
-                        : item.priority === 3
-                            ? 'high'
-                        : 'not valid syntax'
-                    }
-                    </td>
+                <>
+                  <td>{item.date}</td>
+                  <td>{item.request}</td>
+                  <td>{item.department}</td>
+                  <td>₱{item.amount.toFixed(2)}</td>
+                  <td>{
+                      item.status === 1
+                          ? 'approved'
+                      : item.status === 2
+                          ? 'pending'
+                      : item.status === 3
+                          ? 'rejected'
+                      : 'unknown'
+                      }</td>
+                  <td>{
+                          item.priority === 1
+                              ? 'low'
+                          : item.priority === 2
+                              ? 'medium'
+                          : item.priority === 3
+                              ? 'high'
+                          : 'unknown'
+                      }
+                  </td>
+                </>
+                
               </tr>
             ))}
           </tbody>

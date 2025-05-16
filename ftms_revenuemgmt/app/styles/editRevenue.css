@@ -20,6 +20,19 @@ h2 {
     margin-bottom: 0.2rem;
 }
 
+.editRevenue_row input[type="text"], .editRevenue_row input[type="number"], .editRevenue_row input[type="date"], select {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    background-color: white;
+    height: 42px;
+    box-sizing: border-box;
+    gap: 1rem;
+}
+
 /* Modal Box */
 .modalContent {
     background: white;
@@ -38,6 +51,15 @@ h2 {
     width: 100%;
     margin-top: 20px;
     background-color: none;
+}
+
+.row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      background-color: none;
+      margin-bottom: 1rem ;
 }
 
 .buttonContainer {
