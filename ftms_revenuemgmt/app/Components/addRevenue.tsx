@@ -15,6 +15,12 @@ import { isValidCategory, isValidSource, isValidAmount } from '../utility/valida
 
 type AddRevenueProps = {
   onClose: () => void;
+  onAddRevenue: (formData: {
+    category: string;
+    source: string;
+    totalAmount: string;
+    otherSource?: string;
+  }) => void;
 };
 
 // Bus numbers for the dropdowns
@@ -23,7 +29,7 @@ const busNumbers = ['Bus No. 21', 'Bus No. 42', 'Bus No. 69'];
 // Renters list for the Bus Rental category
 const renters = ['Renter A', 'Renter B', 'Renter C'];
 
-const AddRevenue: React.FC<AddRevenueProps> = ({ onClose }) => {
+const AddRevenue: React.FC<AddRevenueProps> = ({ onClose, onAddRevenue }) => {
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
   
@@ -132,7 +138,14 @@ const AddRevenue: React.FC<AddRevenueProps> = ({ onClose }) => {
     const result = await showAddConfirmation();
   
     if (result.isConfirmed) {
-      console.log('Revenue added:', formData);
+      // Pass the form data to the parent component
+      onAddRevenue({
+        category,
+        source: sourceValue,
+        totalAmount,
+        otherSource: formData.otherSource
+      });
+      
       await showAddSuccess();
       onClose();
     }

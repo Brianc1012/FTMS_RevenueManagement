@@ -22,9 +22,9 @@ const revenuePage = () => {
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5); // Use the new page size state
+  const [pageSize, setPageSize] = useState(5); 
 
-  const recordsPerPage = pageSize; // Dynamically set records per page
+  const recordsPerPage = pageSize;
 
   const handleExport = () => {
     const headers = "Date,Category,Source,Amount\n";
@@ -86,6 +86,38 @@ const revenuePage = () => {
   // Handle modal state
   const [showModal, setShowModal] = useState(false);
 
+  // Handle adding new revenue data
+  const handleAddRevenue = (newRevenue: {
+    category: string;
+    source: string;
+    totalAmount: string;
+    otherSource?: string;
+  }) => {
+    // Get current date in YYYY-MM-DD format
+    const today = new Date();
+    const date = today.toISOString().split('T')[0];
+    
+    // Create new revenue record
+    const newRecord: RevenueData = {
+      id: Date.now(), // Generate unique ID
+      date: date,
+      category: newRevenue.category,
+      source: newRevenue.category === 'Others' ? newRevenue.otherSource || '' : newRevenue.source,
+      amount: parseFloat(newRevenue.totalAmount),
+    };
+    
+    // Add to data state
+    setData((prev) => [...prev, newRecord]);
+    
+    // Show success message
+    Swal.fire({
+      icon: 'success',
+      title: 'Revenue Added',
+      text: 'The revenue has been added successfully.',
+      confirmButtonColor: '#1eb25c',
+      background: 'white',
+    });
+  };
 
   // Handle delete action
   const handleDelete = async (id: number) => {
@@ -114,11 +146,9 @@ const revenuePage = () => {
     }
   };
   
-
   //Handles Edit action
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [recordToEdit, setRecordToEdit] = useState<RevenueData | null>(null);
-
 
   return (
     <div className="revenuePage">
@@ -161,13 +191,18 @@ const revenuePage = () => {
             <option value="">All Categories</option>
             <option value="Boundary">Boundary</option>
             <option value="Percentage">Percentage</option>
-            <option value="Percentage">Rental</option>
+            <option value="Bus Rental">Bus Rental</option>
             <option value="Other">Other</option>
           </select>
 
           <button onClick={() => setShowModal(true)} id='addRevenue'>Add Revenue</button>
-          {/* opens add Revenue Modal */}
-          {showModal && <AddRevenueModal onClose={() => setShowModal(false)} />}
+          {/* opens add Revenue Modal with onAddRevenue handler */}
+          {showModal && (
+            <AddRevenueModal 
+              onClose={() => setShowModal(false)} 
+              onAddRevenue={handleAddRevenue}
+            />
+          )}
         </div>
       </div>
 
@@ -191,7 +226,7 @@ const revenuePage = () => {
                 <td>{item.date}</td>
                 <td>{item.category}</td>
                 <td>{item.source}</td>
-                <td>${item.amount.toFixed(2)}</td>
+                <td>₱{item.amount.toFixed(2)}</td>
                 <td className="actionButtons">
                   <button className="editBtn" onClick={() => { setRecordToEdit(item); setEditModalOpen(true);}}>
                     Edit
@@ -205,7 +240,6 @@ const revenuePage = () => {
         {currentRecords.length === 0 && <p>No records found.</p>}
       </div>
         
-
       {/* Edit Revenue Modal */}
       {editModalOpen && recordToEdit && (
         <EditRevenueModal
