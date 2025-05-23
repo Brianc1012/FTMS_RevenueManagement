@@ -1,106 +1,87 @@
-// api\revenues\[id]\route.ts
+// api\revenues\route.ts
 
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { getAssignmentById } from '@/lib/supabase/assignments'
+import { generateId } from '@/lib/idGenerator'
+import type { NextRequest } from 'next/server'
 import { logAudit } from '@/lib/auditLogger'
 
-export async function GET(_req: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
-
-  const revenue = await prisma.revenueRecord.findUnique({
-    where: { revenue_id: id },
-  })
-
-  if (!revenue || revenue.isDeleted) {
-    return NextResponse.json({ error: 'Not found' }, { status: 404 })
-  }
-
-  return NextResponse.json(revenue)
-}
-
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
-  const data = await req.json()
+export async function POST(req: NextRequest) {
+  const data = await req.json();
+  const { assignment_id, category, total_amount, date, created_by } = data;
 
   try {
-    const previousRevenue = await prisma.revenueRecord.findUnique({
-      where: { revenue_id: id }
-    })
+    let finalAmount = total_amount;
 
-    if (!previousRevenue || previousRevenue.isDeleted) {
-      return NextResponse.json({ error: 'Not found' }, { status: 404 })
-    }
-
-    const updatedRevenue = await prisma.revenueRecord.update({
-      where: { revenue_id: id },
-      data: {
-        ...data,
-        updated_at: new Date(),
-      },
-    })
-
-    await logAudit({
-      action: 'UPDATE',
-      table_affected: 'RevenueRecord',
-      record_id: id,
-      performed_by: data.created_by ?? 'unknown',
-      details: `Updated revenue record. Changes: ${JSON.stringify({
-        previous: {
-          category: previousRevenue.category,
-          amount: previousRevenue.total_amount
+    if (assignment_id) {
+      const duplicate = await prisma.revenueRecord.findFirst({
+        where: {
+          assignment_id,
+          date: new Date(date),
         },
-        new: {
-          category: updatedRevenue.category,
-          amount: updatedRevenue.total_amount
-        }
-      })}`
-    })
+      });
 
-    return NextResponse.json(updatedRevenue)
+      if (duplicate) {
+        console.log(`Duplicate record found for assignment_id: ${assignment_id} on date: ${date}`);
+        return NextResponse.json(
+          { error: 'Revenue record for this assignment and date already exists.' },
+          { status: 409 }
+        );
+      }
+
+      const assignmentData = await getAssignmentById(assignment_id);
+      if (!assignmentData || assignmentData.trip_revenue == null) {
+        console.log(`Assignment not found or missing trip_revenue for assignment_id: ${assignment_id}`);
+        return NextResponse.json(
+          { error: 'Assignment not found or missing trip_revenue in Supabase' },
+          { status: 404 }
+        );
+      }
+
+      finalAmount = assignmentData.trip_revenue;
+    }
+
+    const newRevenue = await prisma.revenueRecord.create({
+      data: {
+        revenue_id: await generateId('rev'),
+        assignment_id: assignment_id ?? null,
+        category,
+        total_amount: finalAmount,
+        date: new Date(date),
+        created_by,
+        created_at: new Date(),
+        updated_at: null,
+        isDeleted: false,
+      },
+    });
+
+    await logAudit({
+      action: 'CREATE',
+      table_affected: 'RevenueRecord',
+      record_id: newRevenue.revenue_id,
+      performed_by: created_by,
+      details: `Created revenue record with amount ₱${finalAmount}`,
+    });
+
+    return NextResponse.json(newRevenue);
   } catch (error) {
-    console.error('Failed to update revenue:', error)
+    console.error('Failed to create revenue:', error);
+    
+    // Type guard to check if error is an instance of Error
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    
     return NextResponse.json(
-      { error: 'Internal Server Error' },
+      { error: 'Internal Server Error', details: errorMessage },
       { status: 500 }
-    )
+    );
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
-
-  try {
-    const revenueToDelete = await prisma.revenueRecord.findUnique({
-      where: { revenue_id: id }
-    })
-
-    if (!revenueToDelete || revenueToDelete.isDeleted) {
-      return NextResponse.json({ error: 'Not found' }, { status: 404 })
-    }
-
-    await prisma.revenueRecord.update({
-      where: { revenue_id: id },
-      data: { isDeleted: true, updated_at: new Date() },
-    })
-
-    await logAudit({
-      action: 'DELETE',
-      table_affected: 'RevenueRecord',
-      record_id: id,
-      performed_by: req.headers.get('user-id') ?? 'system',
-      details: `Soft-deleted revenue record. Details: ${JSON.stringify({
-        category: revenueToDelete.category,
-        amount: revenueToDelete.total_amount,
-        date: revenueToDelete.date
-      })}`
-    })
-
-    return NextResponse.json({ success: true })
-  } catch (error) {
-    console.error('Failed to delete revenue:', error)
-    return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
-    )
-  }
+export async function GET() {
+  const revenues = await prisma.revenueRecord.findMany({ 
+    where: { isDeleted: false },
+    orderBy: { created_at: 'desc' }
+  })
+  return NextResponse.json(revenues)
 }
