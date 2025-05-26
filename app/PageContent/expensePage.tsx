@@ -638,6 +638,7 @@ const ExpensePage = () => {
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
+            id="categoryFilter"
           >
             <option value="">All Categories</option>
             <option value="Fuel">Fuel</option>

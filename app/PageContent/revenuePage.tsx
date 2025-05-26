@@ -701,6 +701,7 @@ const RevenuePage = () => {
 
           <select
             value={categoryFilter}
+            id="categoryFilter"
             onChange={(e) => setCategoryFilter(e.target.value)}
           >
             <option value="">All Categories</option>
